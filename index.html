@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MONITORATREK - Solução de rastreamento e gestão de frotas para empresas. Aumente a eficiência, reduza custos e maximize a segurança da sua operação.">
+    <meta name="keywords" content="rastreamento de frotas, gestão de frotas, telemetria, otimização de rotas, redução de custos, segurança de frota, monitoramento de veículos, Monitoratrek">
+    <meta name="author" content="MONITORATREK">
+    <title>MONITORATREK</title>
+    <link rel="icon" href="./src/favicon-32x32.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <style>
+        :root {
+            --primary-color: #efbc20; 
+            --color-hover: #f5dd09; 
+            --whatsapp-color: #25d366;
+            --whatsapp-hover: #128c7e;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s ease-in-out;
+            
+            --bg-main: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --border-color: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-on-light-bg: #000000;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding-top: 69px; 
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-from-left {
+            transform: translateX(-50px);
+        }
+        .reveal-from-right {
+            transform: translateX(50px);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+        .header-sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 12px 0;
+            background-color: var(--color-hover);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        .header-container {
+           display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo-container img {
+            height: 50px;
+        }
+        .main-nav {
+            display: none;
+        }
+        .main-nav ul {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .main-nav a {
+            font-weight: 600;
+            color: var(--text-on-light-bg);
+            position: relative;
+            padding-bottom: 5px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .main-nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #000;
+            transition: var(--transition);
+        }
+        .main-nav a:hover::after, .main-nav a.active::after {
+            width: 100%;
+        }
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--text-on-light-bg);
+            margin: 5px 0;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        .hero-carousel {
+            width: 100%;
+            height: calc(100vh - 69px);
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-slide {
+            height: calc(100vh - 69px);
+            background-size: cover;
+            background-position: center;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+        }
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%);
+        }
+        .carousel-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            max-width: 800px;
+        }
+        .carousel-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+        }
+        .carousel-content p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            gap: 10px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-on-light-bg);
+            box-shadow: 0 4px 15px rgba(239, 188, 32, 0.2);
+        }
+        .btn-primary:hover {
+            background-color: var(--color-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(239, 188, 32, 0.3);
+        }
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+        .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-whatsapp-outline {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid var(--whatsapp-color);
+            padding: 14px 36px;
+        }
+        .btn-whatsapp-outline:hover {
+            background-color: var(--whatsapp-color);
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        .slick-prev:before, .slick-next:before {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 30px;
+            line-height: 1;
+            color: white;
+            opacity: 0.75;
+        }
+        .slick-prev:before { content: '\f053'; }
+        .slick-next:before { content: '\f054'; }
+        .slick-prev { left: 25px; z-index: 2; }
+        .slick-next { right: 25px; z-index: 2; }
+        .slick-dots li button:before { color: white; font-size: 12px; opacity: 0.5; }
+        .slick-dots li.slick-active button:before { opacity: 1; color: var(--primary-color); }
+        .slick-dots { bottom: 30px; }
+
+        /* --- General Section Styling --- */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-title span {
+            color: var(--primary-color);
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: #ffffff;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+        }
+        .section-cta {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* --- Info Section --- */
+        .info-section .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+        .info-section .text-content, .info-section .image-content {
+            flex: 1;
+            width: 100%;
+        }
+        .info-section .image-content img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+        }
+        .info-section .section-title, .info-section .section-subtitle {
+            text-align: center;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .info-section.reverse .container {
+            flex-direction: column;
+        }
+        .info-section ul.features {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+        .info-section ul.features li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .info-section ul.features i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        .cta-center {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+
+        /* --- Features & Segments Section --- */
+        .bg-darker {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .feature-grid-tracking {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .feature-card-tracking {
+            background-color: rgba(31, 31, 31, 0.85);
+            backdrop-filter: blur(5px);
+            padding: 35px 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        .feature-card-tracking:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+            background-color: rgba(31, 31, 31, 1);
+        }
+        .feature-icon-tracking {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .feature-card-tracking h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .feature-card-tracking p {
+            color: var(--text-primary);
+        }
+
+        /* --- Potencialize Section --- */
+        .potencialize-section .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            gap: 5rem;
+        }
+        .potencialize-image {
+            position: relative;
+            height: 400px;
+        }
+        .potencialize-image .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            filter: brightness(0.7);
+            transition: opacity 0.4s ease-in-out;
+            opacity: 0; 
+        }
+        .potencialize-image .bg-image.active {
+            opacity: 1;
+        }
+        .potencialize-image .overlay-card {
+            position: absolute;
+            bottom: 20px;
+            left: -10px;
+            width: 280px;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--border-color);
+            z-index: 2;
+        }
+        .potencialize-image .overlay-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        .potencialize-image .overlay-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .potencialize-content .tabs {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        .potencialize-content .tab-item {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .potencialize-content .tab-item.active {
+            color: var(--primary-color);
+        }
+        .potencialize-content .tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        .potencialize-list li {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            list-style: none;
+            text-align: left;
+        }
+        .potencialize-list .icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            padding-top: 5px;
+        }
+        .potencialize-list h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .potencialize-list p {
+            color: var(--text-secondary);
+        }
+        .tab-content {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+
+        #segmentos {
+            background: linear-gradient(rgba(10, 10, 10, 0.80)), url('/src/segmentos.png') center center/cover no-repeat fixed;
+        }
+        
+        .testimonial-card {
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .testimonial-quote {
+            font-style: italic;
+            color: var(--text-primary);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        .testimonial-quote::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+        }
+        .testimonial-author {
+            text-align: right;
+        }
+        .testimonial-author h4 {
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .testimonial-author p {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* --- Lead Form Section --- */
+        .lead-form-section .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            gap: 4rem;
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+        .lead-form-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .lead-form-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .lead-form-text ul {
+            list-style: none;
+            padding: 0;
+        }
+        .lead-form-text ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        .lead-form-text ul li i {
+            color: var(--primary-color);
+        }
+        .form-container {
+            background-color: var(--bg-main);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        .form-step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .progress-bar {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .form-options label {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border-color);
+            font-weight: 500;
+        }
+        .form-options input[type="radio"] {
+            display: none;
+        }
+        .form-options input[type="radio"]:checked + label {
+            border-color: var(--primary-color);
+            background-color: var(--bg-main);
+        }
+        .form-options label::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--text-secondary);
+            margin-right: 1rem;
+            transition: var(--transition);
+        }
+        .form-options input[type="radio"]:checked + label::before {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--bg-card) inset;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(239, 188, 32, 0.2);
+        }
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .btn-form {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+        .btn-back {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* --- Demo Section --- */
+        .demo-section {
+            padding-bottom: 100px;
+        }
+        .video-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--border-color);
+        }
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+        }
+        .play-button-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .play-button-overlay i {
+            font-size: 4rem;
+            color: #fff;
+            background: rgba(239, 188, 32, 0.8);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+        .play-button-overlay:hover i {
+            transform: scale(1.1);
+        }
+        .video-wrapper.playing .play-button-overlay {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- How it Works Section --- */
+        .process-step {
+            text-align: center;
+        }
+        .process-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .process-icon i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        .process-step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .process-step p {
+            color: var(--text-primary);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .process-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        /* --- FAQ Section --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            padding: 20px;
+            background-color: transparent;
+            border: none;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        .faq-question i {
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-question.active i {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        .faq-answer p {
+            padding: 0 20px 20px;
+            color: var(--text-primary);
+        }
+        .cta-section-final {
+            padding: 120px 20px;
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.85)), url('src/ctafinal.png') center center/cover;
+            text-align: center;
+            color: #ffffff;
+        }
+        .cta-section-final .section-title,
+        .cta-section-final .section-subtitle {
+            color: #ffffff;
+        }
+        .cta-section-final .section-subtitle {
+            color: #ffffff;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-section-final .btn {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            margin-top: 2rem;
+        }
+         .cta-section-final .btn:hover {
+            background-color: var(--color-hover);
+         }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--bg-card);
+            color: #ccc; 
+            padding: 60px 0 0;
+           
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        .footer-column h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li { 
+            margin-bottom: 1rem;
+            color: #ccc
+        }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-column a:hover {
+            color: var(--primary-color); 
+        }
+        .footer-column i { 
+            margin-right: 10px; 
+            width: 20px; 
+            text-align: center; 
+            color: var(--primary-color);
+        }
+        .footer-logo img { height: 60px; }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding: 2rem 0;
+            text-align: center;
+            color: #666;
+        }
+
+        /* --- WhatsApp Float --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .whatsapp-float a:hover {
+            background-color: #128c7e;
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d9534f;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+        }
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            bottom: 40px;
+        }
+
+        /* --- START: Mobile & Desktop Menu Logic --- */
+        
+        /* Mobile Menu Container */
+        .main-nav-mobile {
+            display: block;
+            position: fixed;
+            top: 69px; 
+            right: 0;
+            width: 80%;
+            max-width: 320px;
+            height: calc(100vh - 69px);
+            background-color: var(--bg-card);
+            z-index: 999;
+            padding: 30px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25);
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        
+        .main-nav-mobile.active {
+            transform: translateX(0); /* Slide in */
+        }
+        
+        .main-nav-mobile ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .main-nav-mobile li {
+            width: 100%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .main-nav-mobile li:last-child {
+            border-bottom: none;
+        }
+        
+        .main-nav-mobile a {
+            display: block;
+            padding: 1rem 0.5rem;
+            width: 100%;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .main-nav-mobile a:hover {
+            color: var(--primary-color);
+            background-color: rgba(42, 42, 42, 0.5);
+        }
+        
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+        /* Styles for larger screens */
+        @media (min-width: 825px) {
+            .main-nav {
+                display: block;
+            }
+            .menu-toggle {
+                display: none;
+            }
+            .main-nav-mobile {
+                display: none;
+            }
+            .info-section .container, .info-section.reverse .container {
+                flex-direction: row;
+            }
+            .info-section.reverse .container {
+                flex-direction: row-reverse;
+            }
+            .info-section .section-title, .info-section .section-subtitle {
+                 text-align: left;
+            }
+            .info-section .cta-center {
+                text-align: left;
+            }
+            .potencialize-section .container {
+                grid-template-columns: 1fr 1fr;
+            }
+             .lead-form-section .container {
+                grid-template-columns: 1fr 1.2fr;
+                padding: 4rem;
+             }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-sticky">
+        <div class="header-container container">
+            <div class="logo-container">
+                <a href="#" class="logo">
+                    <img src="/src/logo.png" alt="Logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#solucao">Solução</a></li>
+                    <li><a href="#segmentos">Segmentos</a></li>
+                    <li><a href="#cases">Feedbacks</a></li>
+                    <li><a href="#funcionalidades">Funcionalidades</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <nav class="main-nav-mobile">
+         <ul>
+            <li><a href="#solucao">Solução</a></li>
+            <li><a href="#segmentos">Segmentos</a></li>
+            <li><a href="#cases">feedbackss</a></li>
+            <li><a href="#funcionalidades">Funcionalidades</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero-carousel">
+            <div class="carousel-slide" style="background-image: url(/src/back02.png);">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Gestão de Frota Inteligente</h1>
+                    <p>Transforme a gestão da sua frota com tecnologia de ponta. Otimize rotas, reduza custos operacionais e aumente a segurança dos seus veículos e motoristas.</p>
+                    <div class="hero-buttons">
+                        <a href="#lead-form" class="btn btn-primary">Receber Proposta Personalizada</a>
+                        <a href="https://wa.me/5521967509391?text=Olá!%20Gostaria%20de%20falar%20com%20um%20especialista." target="_blank" class="btn btn-whatsapp-outline">
+                            <i class="fab fa-whatsapp"></i> Falar com Especialista
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url(/src/back01.png);">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Visibilidade Total da Sua Operação, <span>24 Horas por Dia.</span></h1>
+                    <p>Monitore sua frota em tempo real, na palma da sua mão. Tenha acesso a dados precisos para tomar decisões rápidas e estratégicas que impulsionam seu negócio.</p>
+                    <a href="#funcionalidades" class="btn btn-primary">Conheça as Funcionalidades</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section lead-form-section reveal" id="lead-form">
+            <div class="container">
+                <div class="lead-form-text">
+                    <h2>Receba uma Proposta Personalizada</h2>
+                    <p>Responda 3 perguntas rápidas e nossa equipe entrará em contato com uma solução sob medida para as necessidades da sua frota.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Cotação rápida e sem compromisso.</li>
+                        <li><i class="fas fa-check-circle"></i> Atendimento por especialistas em gestão de frotas.</li>
+                        <li><i class="fas fa-check-circle"></i> Descubra o plano ideal para o seu orçamento.</li>
+                    </ul>
+                </div>
+                <div class="form-container">
+                    <form id="multiStepForm">
+                        <div class="form-step active" data-step="1">
+                            <div class="progress-bar">Passo 1 de 3</div>
+                            <h3>Qual a finalidade do seu veículo?</h3>
+                            <div class="form-options">
+                                <input type="radio" id="usoProfissional" name="finalidade" value="Uso Profissional" checked>
+                                <label for="usoProfissional">Uso Profissional</label>
+                                <input type="radio" id="usoPessoal" name="finalidade" value="Uso Pessoal">
+                                <label for="usoPessoal">Uso Pessoal</label>
+                            </div>
+                            <div class="form-navigation">
+                                <span></span>
+                                <button type="button" class="btn btn-primary btn-form btn-next">Próximo</button>
+                            </div>
+                        </div>
+                        <div class="form-step" data-step="2">
+                            <div class="progress-bar">Passo 2 de 3</div>
+                            <h3>Quantos veículos sua frota possui?</h3>
+                            <div class="form-options">
+                                <input type="radio" id="frota1" name="frota" value="1 a 50" checked><label for="frota1">01 a 10</label>
+                                <input type="radio" id="frota2" name="frota" value="10 a 50"><label for="frota2">10 a 50</label>
+                                <input type="radio" id="frota3" name="frota" value="50 a 100"><label for="frota3">50 a 100</label>
+                                <input type="radio" id="frota4" name="frota" value="100 a 250"><label for="frota4">100 a 250</label>
+                                <input type="radio" id="frota5" name="frota" value="Mais de 250"><label for="frota5">Mais de 250</label>
+                            </div>
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-form btn-back">Voltar</button>
+                                <button type="button" class="btn btn-primary btn-form btn-next">Próximo</button>
+                            </div>
+                        </div>
+                        <div class="form-step" data-step="3">
+                            <div class="progress-bar">Passo 3 de 3</div>
+                            <h3>Insira seus dados para contato</h3>
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+                                <input type="text" id="nome" name="nome" placeholder="Insira seu nome completo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail Profissional</label>
+                                <input type="email" id="email" name="email" placeholder="seuemail@empresa.com" required>
+                            </div>
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-form btn-back">Voltar</button>
+                                <button type="submit" class="btn btn-whatsapp btn-form"><i class="fab fa-whatsapp"></i> Enviar e Abrir WhatsApp</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="section demo-section reveal" id="demonstracao">
+            <div class="container">
+                <h2 class="section-title">Veja a nossa Plataforma em <span>Ação</span></h2>
+                <p class="section-subtitle">Descubra como é fácil gerenciar sua frota, analisar dados e tomar decisões inteligentes com a nossa plataforma intuitiva. Assista à nossa demonstração rápida.</p>
+                <div class="video-wrapper" id="videoWrapper">
+                    <video id="demoVideo" poster="https://placehold.co/1200x675/1a1a1a/efbc20?text=Demonstração+Monitoratrek" controls>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Seu navegador não suporta a tag de vídeo.
+                    </video>
+                </div>
+            </div>
+        </section>
+        <section class="info-section section reveal reveal-from-left" id="solucao">
+            <div class="container">
+                <div class="text-content">
+                    <h2 class="section-title">Revolucione a Gestão da Sua Frota com a <span>MONITORATREK</span></h2>
+                    <p class="section-subtitle">Nossas ferramentas não apenas rastreiam, elas potencializam sua gestão, permitindo decisões estratégicas baseadas em dados concretos e em tempo real. Desenvolvido para empresas que buscam excelência operacional, nosso sistema oferece uma visão unificada de todos os veículos, relatórios detalhados que simplificam a complexidade e a capacidade de otimizar rotas para máxima eficiência. Aumente a produtividade da sua equipe e opere com a tranquilidade de saber que seus ativos estão sempre seguros e gerando resultados.</p>
+                    <div class="cta-center">
+                        <a href="https://wa.me/5521967509391?text=Olá!%20Gostaria%20de%20entender%20melhor%20a%20solução%20de%20gestão%20de%20frotas." class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Converse Agora!</a>
+                    </div>
+                </div>
+                <div class="image-content">
+                    <img src="/src/alberto.png" alt="Interface da plataforma de rastreamento da MONITORATREK em um tablet">
+                </div>
+            </div>
+        </section>
+        <section class="potencialize-section section bg-darker reveal reveal-from-right" id="potencialize">
+            <div class="container">
+                <div class="potencialize-image">
+                    <img src="/src/videotelemetria.png" alt="videotelemetria" class="bg-image active" id="image-videotelemetria">
+                    <video autoplay loop muted playsinline class="bg-image" id="image-telemetria">
+                    <source src="/src/telemetria.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                    </video>
+                    <div class="overlay-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Trajeto em Andamento</h4>
+                        <p>A inteligência do vídeo que transforma dados em decisões e potencializa seus resultados.</p>
+                    </div>
+                </div>
+                <div class="potencialize-content">
+                    <div class="tabs">
+                        <div class="tab-item active" data-tab="videotelemetria">Videotelemetria</div>
+                        <div class="tab-item" data-tab="telemetria">Telemetria</div>
+                    </div>
+                    <div class="tab-content" id="videotelemetria">
+                        <h2>Potencialize com Videotelemetria</h2>
+                        <ul class="potencialize-list">
+                            <li>
+                                <div class="icon"><i class="fas fa-video"></i></div>
+                                <div class="text">
+                                    <h4>Analise eventos críticos com provas visuais</h4>
+                                    <p>Veja o que realmente aconteceu em casos de acidentes, infrações ou comportamento de risco.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-user-shield"></i></div>
+                                <div class="text">
+                                    <h4>Motoristas com mais eficiência</h4>
+                                    <p>Garanta a segurança dos seus motoristas e da sua carga com a localização precisa e instantânea de todos os veículos.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-file-contract"></i></div>
+                                <div class="text">
+                                    <h4>Reduza custos com seguros e litígios</h4>
+                                    <p>Tenha evidências irrefutáveis para proteger sua empresa e seus motoristas em qualquer situação.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="telemetria" style="display: none;">
+                        <h2>Domine com Telemetria Pura</h2>
+                        <ul class="potencialize-list">
+                            <li>
+                                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                                <div class="text">
+                                    <h4>Acompanhe todos os detalhes da frota</h4>
+                                    <p>Acesse dados sobre localização, velocidade, tempo de motor ocioso e muito mais.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-gas-pump"></i></div>
+                                <div class="text">
+                                    <h4>Reduza os custos com combustível</h4>
+                                    <p>Veja todos os gastos na plataforma, integre seus cartões-combustível e acompanhe o modo de direção dos veículos.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-sitemap"></i></div>
+                                <div class="text">
+                                    <h4>Centralize as informações em um só lugar</h4>
+                                    <p>Analise os dados da operação direto na plataforma ou integre sua ferramenta de BI através das nossas APIs.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section reveal" id="segmentos">
+            <div class="container">
+                <h2 class="section-title">Soluções <span>Sob Medida</span> para Diversos Segmentos</h2>
+                <p class="section-subtitle">Seja qual for o seu ramo de atuação, temos a tecnologia ideal <br>para otimizar sua operação logística e de transporte.</p>
+                <div class="feature-grid-tracking">
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-truck-loading"></i></div>
+                        <h3>Logística e Transporte</h3>
+                        <p>Otimize rotas, controle entregas, reduza o tempo de parada e garanta a segurança da sua carga do início ao fim.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-hard-hat"></i></div>
+                        <h3>Construção Civil</h3>
+                        <p>Gerencie frotas de veículos e maquinários pesados, controle horas trabalhadas e evite o uso indevido.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-car"></i></div>
+                        <h3>Locadoras de Veículos</h3>
+                        <p>Tenha a localização exata de cada veículo, crie cercas virtuais e recupere seus ativos com mais agilidade.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section bg-darker reveal reveal-from-left" id="cases">
+            <div class="container">
+                <h2 class="section-title">Resultados que <span>Geramos</span></h2>
+                <p class="section-subtitle">Veja como empresas como a sua estão transformando suas operações e alcançando novos patamares de eficiência com a MONITORATREK.</p>
+                <div class="feature-grid-tracking">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"Com a telemetria da MONITORATREK, reduzimos nossos custos com combustível em 18% no primeiro trimestre. A plataforma é intuitiva e o suporte é impecável."</p>
+                        <div class="testimonial-author">
+                            <h4>João Silva</h4>
+                            <p>Diretor de Logística</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"A identificação de motorista e os alertas de velocidade foram cruciais para diminuir o número de multas e melhorar a segurança da nossa equipe. Recomendo!"</p>
+                        <div class="testimonial-author">
+                            <h4>Maria Oliveira</h4>
+                            <p>Gerente de Frota</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"O controle de jornada e os relatórios automáticos simplificaram nossa gestão. Ganhamos tempo e precisão nas informações para a folha de pagamento."</p>
+                        <div class="testimonial-author">
+                            <h4>Carlos Pereira</h4>
+                            <p>Sócio-diretor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section reveal reveal-from-right" id="funcionalidades">
+            <div class="container">
+                <h2 class="section-title"><span>Funcionalidades</span> Desenhadas para o <br><span>Sucesso da Sua Frota</span></h2>
+                <p class="section-subtitle">Explore nossas ferramentas projetadas para oferecer controle total, segurança máxima e otimização sem precedentes para o seu negócio.</p>
+                <div class="feature-grid-tracking">
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3>Rastreamento e Histórico</h3>
+                        <p>Localização em tempo real e histórico de rotas detalhado. Analise e otimize com precisão cirúrgica.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-bell"></i></div>
+                        <h3>Alertas e Cercas Virtuais</h3>
+                        <p>Receba notificações sobre velocidade, ignição e áreas restritas. Mantenha sua operação segura e dentro das regras.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-id-card-alt"></i></div>
+                        <h3>Identificação de Motorista</h3>
+                        <p>Saiba exatamente quem está ao volante. Bloqueie a partida sem a identificação correta para máxima segurança.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-chart-line"></i></div>
+                        <h3>Relatórios Gerenciais</h3>
+                        <p>Crie relatórios customizáveis sobre desempenho, jornada e consumo. Transforme dados brutos em insights poderosos.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-video"></i></div>
+                        <h3>Vídeo Telemetria</h3>
+                        <p>Combine telemetria com gravações de vídeo para analisar eventos críticos e obter provas visuais irrefutáveis.</p>
+                    </div>
+                    <div class="feature-card-tracking">
+                        <div class="feature-icon-tracking"><i class="fas fa-tools"></i></div>
+                        <h3>Gestão de Manutenção</h3>
+                        <p>Programe manutenções preventivas com base no hodômetro e horas de motor. Evite surpresas e reduza custos.</p>
+                    </div>
+                </div>
+                 <div class="section-cta">
+                    <h3 style="font-weight: 600; font-size: 1.5rem; margin-bottom: 1rem;">Impressionado com o que podemos fazer?</h3>
+                    <p style="color: var(--text-primary); max-width: 600px; margin: 0 auto 2rem auto;">Vamos conversar sobre como essas funcionalidades podem ser aplicadas ao seu negócio.</p>
+                    <a href="https://wa.me/5521967509391?text=Olá!%20Vi%20as%20funcionalidades%20no%20site%20e%20gostaria%20de%20mais%20detalhes." class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Quero mais Detalhes</a>
+                </div>
+            </div>
+        </section>
+        <section class="section bg-darker reveal" id="processo">
+            <div class="container">
+                <h2 class="section-title">Nosso Processo: <span>Simples, Rápido e Eficiente</span></h2>
+                <p class="section-subtitle">Em apenas 3 passos, sua frota estará equipada com a mais alta tecnologia de gestão e rastreamento do mercado.</p>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-comments"></i></div>
+                        <h3>1. Consultoria Inicial</h3>
+                        <p>Nossos especialistas entendem sua necessidade e recomendam o plano e as funcionalidades ideais para sua operação.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-wrench"></i></div>
+                        <h3>2. Instalação Profissional</h3>
+                        <p>Agendamos a instalação com técnicos qualificados, garantindo um serviço rápido, discreto e sem dor de cabeça.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <h3>3. Suporte</h3>
+                        <p>Tenha a tranquilidade de saber que nossa equipe de suporte está sempre a postos para resolver qualquer questão.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="faq section reveal" id="faq">
+            <div class="container faq-container">
+                <h2 class="section-title">Perguntas <span>Frequentes</span></h2>
+                <p class="section-subtitle">Respostas claras e diretas para as dúvidas mais comuns sobre nossas soluções de gestão de frotas.</p>
+                <div class="faq-item">
+                    <button class="faq-question">Onde acesso a localização dos veículos?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Você acessa a localização em tempo real pela nossa plataforma web e aplicativo móvel (Android/iOS), com total flexibilidade.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Por quanto tempo o histórico de rotas é armazenado?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>O histórico completo de rotas e posições fica armazenado por 90 dias, ideal para auditorias e otimização.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Quais dados de telemetria são coletados?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Coletamos dados como velocidade, aceleração/frenagem brusca, curvas, RPM e tempo ocioso para uma análise completa.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">O sistema impede a partida sem identificação do motorista?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Sim, nosso sistema com chaveiro RFID pode ser configurado para bloquear a ignição do veículo sem a identificação correta, garantindo máxima segurança.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Como funciona a instalação dos rastreadores?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>A instalação é realizada por nossa equipe de técnicos especializados, de forma rápida e segura, minimizando o tempo de parada do veículo.</p></div>
+                </div>
+                 <div class="section-cta">
+                    <a href="https://wa.me/5521967509391?text=Olá,%20ainda%20tenho%20uma%20dúvida%20sobre%20a%20solução." class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Ainda com dúvidas? Fale conosco</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section-final reveal">
+            <div class="container">
+                <h2 class="section-title">Sua Frota Merece o <span>MELHOR.</span> <br> Sua Empresa Merece a <span>MONITORATREK.</span></h2>
+                <p class="section-subtitle">Não adie a eficiência. Transforme a gestão da sua frota com segurança. Fale com um especialista e receba uma proposta personalizada sem compromisso.</p>
+                <a href="https://wa.me/5521967509391?text=Olá,%20gostaria%20de%20uma%20proposta%20personalizada%20para%20gestão%20de%20frotas." class="btn btn-primary" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="/src/logo_yellow.webp" alt="Logo">
+                    </div>
+                    <p>Soluções completas em rastreamento veicular com a melhor relação custo-benefício do mercado.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Soluções</h3>
+                    <ul>
+                        <li><a href="#solucao">Gestão de Frotas</a></li>
+                        <li><a href="#funcionalidades">Telemetria Avançada</a></li>
+                        <li><a href="#segmentos">Segmentos Atendidos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#cases">Cases de Sucesso</a></li>
+                        <li><a href="#processo">Nosso Processo</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-phone-alt"></i>(21) 96750-9391</li>
+                        <li><i class="fas fa-envelope"></i>contato@monitoratrek.com</li>
+                        <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/5521967509391" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MONITORATREK. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="whatsapp-float">
+        <a href="https://wa.me/5521967509391?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20as%20soluções%20para%20empresas." target="_blank" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+    <div id="toast-notification" class="toast"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            function showToast(message, isError = true) {
+                const toast = document.getElementById('toast-notification');
+                toast.textContent = message;
+                toast.style.backgroundColor = isError ? '#d9534f' : '#5cb85c';
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            $('.hero-carousel').slick({
+                autoplay: true,
+                autoplaySpeed: 5000,
+                dots: true,
+                arrows: true,
+                infinite: true,
+                speed: 800,
+                fade: true,
+                cssEase: 'ease-in-out'
+            });
+
+            $('.faq-question').click(function() {
+                const $this = $(this);
+                const $answer = $this.next('.faq-answer');
+                
+                $('.faq-answer').not($answer).css('max-height', '0');
+                $('.faq-question').not($this).removeClass('active');
+
+                $this.toggleClass('active');
+                if ($this.hasClass('active')) {
+                    $answer.css('max-height', $answer[0].scrollHeight + 'px');
+                } else {
+                    $answer.css('max-height', '0');
+                }
+            });
+
+            // START: Mobile Menu Logic
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNav = document.querySelector('.main-nav-mobile');
+            const mobileNavLinks = document.querySelectorAll('.main-nav-mobile a');
+
+            menuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                });
+            });
+            // END: Mobile Menu Logic
+
+            $('.potencialize-content .tab-item').on('click', function() {
+                $('.potencialize-content .tab-item').removeClass('active');
+                $(this).addClass('active');
+
+                const targetId = $(this).data('tab');
+                $('.potencialize-section .tab-content').hide();
+                $('.potencialize-image .bg-image').removeClass('active');
+                $('#' + targetId).fadeIn(300);
+                $('#image-' + targetId).addClass('active');
+            });
+
+            let currentStep = 1;
+            const formSteps = $('.form-step');
+
+            function showStep(step) {
+                formSteps.removeClass('active');
+                $(`.form-step[data-step="${step}"]`).addClass('active');
+            }
+
+            $('.btn-next').on('click', function() {
+                if (currentStep < 3) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+
+            $('.btn-back').on('click', function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+            
+            $('input[name="finalidade"]').on('change', function() {
+                if ($(this).val() === 'Uso Pessoal') {
+                    window.location.href = 'https://monitoratrek.com.br/'; 
+                }
+            });
+
+            $('#multiStepForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const finalidade = $('input[name="finalidade"]:checked').val();
+                const frota = $('input[name="frota"]:checked').val();
+                const nome = $('#nome').val();
+                const email = $('#email').val();
+                const numeroWhatsApp = '5521967509391';
+
+                if (!nome || !email) {
+                    showToast('Por favor, preencha seu nome e e-mail.');
+                    return;
+                }
+                
+                showToast('Tudo certo! Abrindo o WhatsApp...', false);
+
+                let mensagem = `Olá! Gostaria de uma proposta personalizada para frota.\n\n`;
+                mensagem += `*Nome:* ${nome}\n`;
+                mensagem += `*E-mail:* ${email}\n`;
+                mensagem += `*Finalidade de Uso:* ${finalidade}\n`;
+                mensagem += `*Tamanho da Frota:* ${frota} veículos`;
+
+                const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+                
+                setTimeout(() => {
+                    window.open(urlWhatsApp, '_blank');
+                }, 500);
+            });
+            
+            const videoWrapper = document.getElementById('videoWrapper');
+            const video = document.getElementById('demoVideo');
+            
+            if (videoWrapper && video) {
+                const playOverlay = document.createElement('div');
+                playOverlay.className = 'play-button-overlay';
+                playOverlay.innerHTML = '<i class="fas fa-play"></i>';
+                videoWrapper.appendChild(playOverlay);
+                video.controls = false;
+
+                playOverlay.addEventListener('click', function() {
+                    video.play();
+                });
+
+                video.addEventListener('play', () => {
+                    video.controls = true;
+                    videoWrapper.classList.add('playing');
+                });
+
+                video.addEventListener('pause', () => {
+                     videoWrapper.classList.remove('playing');
+                });
+            }
+
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+
